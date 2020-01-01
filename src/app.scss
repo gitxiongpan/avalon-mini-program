@@ -1,0 +1,29 @@
+.index {
+  flex-direction: column;
+  padding: 20px;
+}
+
+.numInput {
+  border: solid 1px;
+  padding-left: 10rpx;
+}
+
+.btn {
+  margin: 10px 0;
+}
+
+.flex-wrp {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.flex {
+  display: flex;
+}
+
+.btn {
+  min-width: 100px;
+  flex: 1;
+  margin: 10px;
+}
