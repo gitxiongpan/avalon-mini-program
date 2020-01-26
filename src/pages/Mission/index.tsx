@@ -1,22 +1,12 @@
 import Taro, { useState } from "@tarojs/taro";
-import {
-  View,
-  Input,
-  Text,
-  Button,
-  Checkbox,
-  Label,
-  CheckboxGroup
-} from "@tarojs/components";
+import { View, Button, Checkbox, CheckboxGroup } from "@tarojs/components";
 import PropTypes from "prop-types";
 import { connect } from "@tarojs/redux";
-import { getRandomInt } from "../../utils/general";
+
 import { updateQuestArr } from "../../actions/quest";
 import "./style.scss";
 
 function Mission(props) {
-  const [playerIndex, setPlayerIndex] = useState(getRandomInt(props.number));
-  const [questIndex, setQuestIndex] = useState(0);
   const [checkedArr, setCheckedArr] = useState([]);
   const [isError, setError] = useState(false);
   let questArr: number[] = [];
@@ -30,6 +20,15 @@ function Mission(props) {
     case 7:
       questArr = [2, 3, 3, 4, 4];
       break;
+    case 8:
+      questArr = [3, 4, 4, 5, 5];
+      break;
+    case 9:
+      questArr = [3, 4, 4, 5, 5];
+      break;
+    case 10:
+      questArr = [3, 4, 4, 5, 5];
+      break;
     default:
       questArr = [3, 4, 4, 5, 5];
       break;
@@ -40,30 +39,33 @@ function Mission(props) {
   };
 
   const handleNext = () => {
-    if (checkedArr.length !== questArr[questIndex]) {
+    if (checkedArr.length !== questArr[props.questIndex]) {
       setError(true);
     } else {
       setError(false);
-      props.updateQuestArr(checkedArr);
-      Taro.navigateTo({
+      Taro.redirectTo({
         url: `/pages/Quest/index`
       });
+      props.updateQuestArr(checkedArr);
     }
   };
 
   return (
     <View className="index Mission">
       <View>
-        Player {playerIndex + 1}, your are the leader. Please nominate{" "}
-        {questArr[questIndex]} players for the quest {questIndex + 1}.\n After\t
-        appropriate discussion, all players vote for the proposal.\n If\t half\t
-        players agree, the leader can choose {questArr[questIndex]} players\t
-        below to start the quest phase.\n If not, the next player will be the\t
-        leader and start nominate again.
+        Player {props.leader + 1}, your are the leader. Please nominate{" "}
+        {questArr[props.questIndex]} players for this QUEST{" "}
+        {props.questIndex + 1}.
+      </View>
+      <View>
+        After appropriate discussion, all players vote for the proposal. If half{" "}
+        players agree, the leader can choose {questArr[props.questIndex]}{" "}
+        players below to start the quest phase. If not, the next player will be{" "}
+        the leader and start nominate again.
       </View>
       <View>
         <CheckboxGroup className="Mission__checkboxes" onChange={handleChange}>
-          {props.players.map((player, i) => (
+          {props.players.map(player => (
             <Checkbox
               key={`checkbox${player.index}`}
               className="Mission__checkbox"
@@ -86,7 +88,9 @@ function Mission(props) {
 
 const mapStateToProps = state => ({
   players: state.player.players,
-  number: state.player.number
+  number: state.player.number,
+  questIndex: state.quest.index,
+  leader: state.player.leader
 });
 
 Mission.propTypes = {

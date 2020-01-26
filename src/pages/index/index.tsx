@@ -1,10 +1,11 @@
-import Taro, { useState } from "@tarojs/taro";
-import { View, Button, Text, Input } from "@tarojs/components";
+import Taro, { useState, useEffect } from "@tarojs/taro";
+import { View, Button, Text, Input, Image } from "@tarojs/components";
 import PropTypes from "prop-types";
 import { connect } from "@tarojs/redux";
 import { shuffleArr } from "../../utils/general";
 import { updatePlayers } from "../../actions/player";
-import { add, minus, asyncAdd } from "../../actions/counter";
+import Cover from "../../assets/images/Cover.jpg";
+import { resetRedux } from "../../actions/app";
 import "./index.scss";
 
 // #region 书写注意
@@ -51,9 +52,14 @@ function Index(props) {
 
   // create randomed roles
   const genRoles = (n: number) => {
+    let roles;
+    let shuffledRoles;
     switch (n) {
+      case 5:
+        roles = ["Percival", "Merlin", "Servant", "Morgana", "Assassin"];
+        break;
       case 6:
-        const roles = [
+        roles = [
           "Percival",
           "Merlin",
           "Servant",
@@ -61,13 +67,63 @@ function Index(props) {
           "Morgana",
           "Assassin"
         ];
-        const shuffledRoles = shuffleArr(roles);
-        console.log(shuffledRoles);
-        return shuffledRoles;
+        break;
+      case 7:
+        roles = [
+          "Percival",
+          "Merlin",
+          "Servant",
+          "Servant",
+          "Morgana",
+          "Assassin",
+          "Mordred"
+        ];
+        break;
+      case 8:
+        roles = [
+          "Percival",
+          "Merlin",
+          "Servant",
+          "Servant",
+          "Servant",
+          "Morgana",
+          "Assassin",
+          "Mordred"
+        ];
+        break;
+      case 9:
+        roles = [
+          "Percival",
+          "Merlin",
+          "Servant",
+          "Servant",
+          "Servant",
+          "Servant",
+          "Morgana",
+          "Assassin",
+          "Mordred"
+        ];
+        break;
+      case 10:
+        roles = [
+          "Percival",
+          "Merlin",
+          "Servant",
+          "Servant",
+          "Servant",
+          "Servant",
+          "Morgana",
+          "Assassin",
+          "Mordred",
+          "Oberon"
+        ];
+        break;
       default:
         setError("Number of players is not allowed.");
         return;
     }
+    shuffledRoles = shuffleArr(roles);
+    return shuffledRoles;
   };
 
   // assign roles to players
@@ -156,30 +212,24 @@ function Index(props) {
     props.updatePlayers(playerArr);
     // update number of plyars in redux
     //navigate to next page
-    Taro.navigateTo({
-      url: `/pages/Mission/index`
+    Taro.redirectTo({
+      url: `/pages/Person/index`
     });
   };
 
+  useEffect(() => {
+    props.resetRedux();
+  }, [props]);
+
   return (
     <View className="index">
+      <Image src={Cover} />
+      <View>Number of players</View>
       <Input className="numInput" type="number" onInput={handleInput} />
       <Text>{num} players</Text>
-      <Button className="add_btn btn" onClick={props.add}>
-        +
-      </Button>
-      <Button className="dec_btn btn" onClick={props.minus}>
-        -
-      </Button>
-      <Button className="dec_btn btn" onClick={props.asyncAdd}>
-        async
-      </Button>
       <Button className="dec_btn btn" onClick={() => handleStart(num)}>
         Start
       </Button>
-      {/* <View>
-          <Text>{this.props.counter.num}</Text>
-        </View> */}
       {error !== "" && <Text>{error}</Text>}
     </View>
   );
@@ -194,18 +244,14 @@ function Index(props) {
 
 Index.propTypes = {
   num: PropTypes.number,
-  add: PropTypes.func,
   players: PropTypes.array
 };
 
 const mapStateToProps = state => ({
-  num: state.counter.num,
   players: state.player.players
 });
 
 export default connect(mapStateToProps, {
-  add,
-  minus,
-  asyncAdd,
-  updatePlayers
+  updatePlayers,
+  resetRedux
 })(Index);

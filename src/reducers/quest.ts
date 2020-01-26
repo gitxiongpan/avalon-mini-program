@@ -1,9 +1,15 @@
+// eslint-disable-next-line import/no-named-as-default
 import produce from "immer";
-import { UPDATEQUESTARR, UPDATEQUESTRESULTS } from "../constants/constants";
+import {
+  UPDATEQUESTARR,
+  UPDATEQUESTRESULT,
+  PROCEEDQUEST
+} from "../constants/constants";
 
 const INITIAL_STATE = {
-  questArr: [],
-  quesrResult: []
+  questArr: Array(),
+  questResults: Array(),
+  index: 0
 };
 
 const quest = (state = INITIAL_STATE, action) =>
@@ -12,8 +18,12 @@ const quest = (state = INITIAL_STATE, action) =>
       case UPDATEQUESTARR:
         draft.questArr = action.questArr;
         break;
-      case UPDATEQUESTRESULTS:
-        draft.questArr = action.questResults;
+      case UPDATEQUESTRESULT:
+        draft.questResults.push(action.questResult);
+        break;
+      case PROCEEDQUEST:
+        draft.index += 1;
+        break;
       default:
         break;
     }

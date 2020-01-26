@@ -2,9 +2,13 @@
   .navigation {
     display: flex;
     justify-content: space-between;
-    margin-top:50px;
+    margin-top: 50px;
     .btn {
       flex: 1;
     }
   }
+}
+
+.bold {
+  font-weight: bold;
 }
