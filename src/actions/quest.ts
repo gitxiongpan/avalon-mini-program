@@ -1,4 +1,8 @@
-import { UPDATEQUESTARR } from "../constants/constants";
+import {
+  UPDATEQUESTARR,
+  UPDATEQUESTRESULT,
+  PROCEEDQUEST
+} from "../constants/constants";
 
 export const updateQuestArr = questArr => ({
   type: UPDATEQUESTARR,
@@ -6,8 +10,12 @@ export const updateQuestArr = questArr => ({
 });
 
 export const updateQuestResult = questResult => ({
-  type: UPDATEQUESTARR,
+  type: UPDATEQUESTRESULT,
   questResult
+});
+
+export const proceedQuest = () => ({
+  type: PROCEEDQUEST
 });
 
 export default null;

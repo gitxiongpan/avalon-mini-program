@@ -1,4 +1,4 @@
-import Taro, { Component, Config } from "@tarojs/taro";
+import Taro, { Component } from "@tarojs/taro";
 import { Provider } from "@tarojs/redux";
 
 import Index from "./pages/index";
@@ -23,6 +23,9 @@ class App extends Component {
    * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
+
+  componentDidMount() {}
+
   config: Config = {
     pages: [
       "pages/index/index",
@@ -33,12 +36,10 @@ class App extends Component {
     window: {
       backgroundTextStyle: "light",
       navigationBarBackgroundColor: "#fff",
-      navigationBarTitleText: "WeChat",
+      navigationBarTitleText: "Avalon",
       navigationBarTextStyle: "black"
     }
   };
-
-  componentDidMount() {}
 
   componentDidShow() {}
 

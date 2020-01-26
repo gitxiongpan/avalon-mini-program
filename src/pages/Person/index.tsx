@@ -41,7 +41,9 @@ function Person(props) {
       {isView && (
         <View>
           <Text>
-            Your are acting as {props.players[curIndex].role} in this game.{" "}
+            Your are acting as{" "}
+            <Text className="bold">{props.players[curIndex].role}</Text> in this{" "}
+            game.{" "}
           </Text>
           <Text>{props.players[curIndex].txt}</Text>
         </View>
